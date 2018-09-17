@@ -1,0 +1,21 @@
+<launch>
+  <node pkg="xv_11_laser_driver" type="neato_laser_publisher" name="neato_laser" output="screen">
+    <param name="~port" value="/dev/ttyAMA0"/>
+  </node>
+  <node pkg="phoebe-turtlebot" type="baseneato.py" name="base_to_neato_tf" output="screen">
+  </node>
+  <node pkg="roboclaw_node" type="roboclaw_node.py" name="roboclaw_node">
+    <param name="~dev" value="/dev/ttyACM0"/>
+    <param name="~baud" value="115200"/>
+    <param name="~address" value="128"/>
+    <param name="~max_speed" value="2.0"/>
+    <param name="~ticks_per_meter" value="4500"/>
+    <param name="~base_width" value="0.215"/>
+  </node>
+
+  <node pkg="diagnostic_aggregator" type="aggregator_node"
+        name="diagnostic_aggregator">
+    <rosparam command="load"
+              file="$(find roboclaw_node)/config/roboclaw_diag.yaml"/>
+  </node>
+</launch>
