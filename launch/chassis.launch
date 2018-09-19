@@ -10,7 +10,7 @@
     <param name="~address" value="128"/>
     <param name="~max_speed" value="2.0"/>
     <param name="~ticks_per_meter" value="4500"/>
-    <param name="~base_width" value="0.215"/>
+    <param name="~base_width" value="0.2175"/>
   </node>
 
   <node pkg="diagnostic_aggregator" type="aggregator_node"
