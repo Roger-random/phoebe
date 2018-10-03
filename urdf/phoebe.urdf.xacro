@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<robot name="phoebe" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:property name="body_width" value="0.18" />
+  <xacro:property name="body_height" value="0.04875" />
+  <xacro:property name="body_rect_length" value="0.141" />
+  <xacro:property name="body_center_to_cylinder" value="0.05" />
+  <xacro:property name="body_center_to_bottom" value="0.015" />
+  <xacro:property name="neato_diameter" value="0.077" />
+  <xacro:property name="neato_height" value="0.016" />
+  <xacro:property name="neato_offset_x" value="-0.046" />
+  <xacro:property name="neato_offset_y" value="0" />
+  <xacro:property name="neato_offset_z" value="0.047" />
+  <xacro:property name="wheel_width" value="0.026" />
+  <xacro:property name="wheel_base" value="0.215" />
+  <xacro:property name="wheel_diameter" value="0.067" />
+
+  <material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+
+  <material name="black">
+    <color rgba="0 0 0 1"/>
+  </material>
+
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="${body_rect_length/2 - body_center_to_cylinder} 0 ${body_height/2 - body_center_to_bottom}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${body_rect_length} ${body_width} ${body_height}"/>
+      </geometry>
+      <material name="white" />
+    </visual>
+    <visual>
+      <origin xyz="${-body_center_to_cylinder} 0 ${body_height/2 - body_center_to_bottom}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="${body_width/2}" length="${body_height}"/>
+      </geometry>
+      <material name="white" />
+    </visual>
+  </link>
+
+  <link name="neato_laser">
+    <visual>
+      <geometry>
+        <cylinder radius="${neato_diameter/2}" length="${neato_height}"/>
+      </geometry>
+      <materual name="blue" />
+    </visual>
+  </link>
+
+  <joint name="base_neato_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="neato_laser"/>
+    <origin xyz="${neato_offset_x} ${neato_offset_y} ${neato_offset_z}"/>
+  </joint>
+
+  <xacro:macro name="wheel" params="side reflect">
+    <link name="wheel_${side}">
+      <visual>
+        <origin xyz="0 0 0" rpy="${reflect*-1*pi/2} 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_diameter/2}" length="${wheel_width}"/>
+        </geometry>
+        <material name="black" />
+      </visual>
+    </link>
+    <joint name="base_wheel_${side}_joint" type="continuous">
+      <axis xyz="0 1 0" rpy="0 0 0" />
+      <parent link="base_link" />
+      <child link="wheel_${side}" />
+      <origin xyz="0 ${reflect * wheel_base/2} 0" rpy="0 0 0" />
+    </joint>
+  </xacro:macro>
+
+  <xacro:wheel side="left" reflect="1" />  
+  <xacro:wheel side="right" reflect="-1" />
+</robot>
