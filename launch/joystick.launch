@@ -1,11 +1,11 @@
 <launch>
   <node pkg="joy" type="joy_node" name="phoebe_joystick_read" output="screen">
-    <param name="~autorepeat_rate" value="2"/>
+    <param name="~autorepeat_rate" value="2.0"/>
   </node>
   <node pkg="teleop_twist_joy" type="teleop_node" name="phoebe_joystick_publish" output="screen">
     <param name="~enable_turbo_button" value="1"/>
-    <param name="~scale_linear" value="0.05"/>
+    <param name="~scale_linear" value="0.1"/>
     <param name="~scale_linear_turbo" value="1.0"/>
-    <param name="~scale_angular" value="0.5"/>
+    <param name="~scale_angular" value="1.0"/>
   </node>
 </launch>
