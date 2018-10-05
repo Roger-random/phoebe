@@ -56,7 +56,7 @@
   <joint name="base_neato_joint" type="fixed">
     <parent link="base_link"/>
     <child link="neato_laser"/>
-    <origin xyz="${neato_offset_x} ${neato_offset_y} ${neato_offset_z}"/>
+    <origin xyz="${neato_offset_x} ${neato_offset_y} ${neato_offset_z + wheel_diameter/2}" rpy="0 0 ${pi}" />
   </joint>
 
   <xacro:macro name="wheel" params="side reflect">
@@ -69,7 +69,7 @@
         <material name="wheel" />
       </visual>
     </link>
-    <joint name="base_wheel_${side}_joint" type="continuous">
+    <joint name="base_wheel_${side}_joint" type="fixed"> <!-- TODO: type="continuous" when we read encoder data and publish wheel angle -->
       <axis xyz="0 1 0" rpy="0 0 0" />
       <parent link="base_link" />
       <child link="wheel_${side}" />
@@ -79,4 +79,20 @@
 
   <xacro:wheel side="left" reflect="1" />  
   <xacro:wheel side="right" reflect="-1" />
+
+  <link name="wheel_caster">
+    <visual>
+      <geometry>
+        <sphere radius="${wheel_diameter/2}" />
+      </geometry>
+      <material name="wheel" />
+    </visual>
+  </link>
+
+  <joint name="base_caster" type="fixed">
+    <parent link="base_link" />
+    <child link="wheel_caster" />
+    <origin xyz="${-body_center_to_cylinder-body_width/2+wheel_diameter/2} 0 ${wheel_diameter/2}" />
+  </joint>
+
 </robot>
