@@ -1,9 +1,13 @@
 <launch>
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find phoebe)/urdf/phoebe.urdf.xacro" />
+
   <node pkg="xv_11_laser_driver" type="neato_laser_publisher" name="neato_laser" output="screen">
     <param name="~port" value="/dev/ttyAMA0"/>
   </node>
-  <node pkg="phoebe" type="baseneato.py" name="base_to_neato_tf" output="screen">
-  </node>
+
+  <node name="phoebe_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
   <node pkg="roboclaw_node" type="roboclaw_node.py" name="roboclaw_node">
     <param name="~dev" value="/dev/ttyACM0"/>
     <param name="~baud" value="115200"/>
@@ -18,4 +22,5 @@
     <rosparam command="load"
               file="$(find roboclaw_node)/config/roboclaw_diag.yaml"/>
   </node>
+  
 </launch>
