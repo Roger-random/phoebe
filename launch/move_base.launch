@@ -1,0 +1,9 @@
+<launch>
+  <node pkg="move_base" type="move_base" name="phoebe_move_base" respawn="false" output="screen">
+    <rosparam file="$(find phoebe)/nav2d/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find phoebe)/nav2d/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find phoebe)/nav2d/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find phoebe)/nav2d/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find phoebe)/nav2d/base_local_planner_params.yaml" command="load" />
+  </node>
+</launch>
