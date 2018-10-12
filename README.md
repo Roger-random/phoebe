@@ -9,6 +9,16 @@ Phoebe leverages the extensive ROS component ecosystem for functionality,
 as a result there is almost no source code in this repository. Most of the
 files here composes open source ROS modules together to run Phoebe.
 
+# Dependencies
+This package depends on a few pieces of code outside of standard ROS libraries.
+* [Neato XV-11 LIDAR](https://github.com/rohbotics/xv_11_laser_driver) -
+ROS driver for the LIDAR unit used on Phoebe. See documentation
+[here](http://wiki.ros.org/xv_11_laser_driver).
+* [Roboclaw ROS](https://github.com/sonyccd/roboclaw_ros) - ROS driver for
+the motor control module used on Phoebe. __IMPORTANT__: Until my bug fix
+[pull requests](https://github.com/sonyccd/roboclaw_ros/pulls) are accepted,
+use [my fork](https://github.com/Roger-random/roboclaw_ros) of this code.
+
 # Phoebe Capabilities
 * Human operation by joystick/gamepad.
 (Drive around like a remote control car.)
